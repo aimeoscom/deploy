@@ -1,4 +1,14 @@
 #!/bin/sh
 
-composer create-project aimeos/aimeos
+cd /var/www
 
+# Install latest Aimeos stable release
+composer -n create-project aimeos/aimeos aimeos
+
+# Allow web server to modify files/directories
+chgrp -R www-data /var/www/aimeos/bootstrap /var/www/aimeos/storage
+chmod -R g+w /var/www/aimeos/bootstrap /var/www/aimeos/storage
+
+# Switch directories
+rm -rf /var/www/html
+mv /var/www/aimeos /var/www/html
